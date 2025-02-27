@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_safe_bd/app_controller/app_controller.dart';
+import 'package:flutter_safe_bd/theme/app_theme.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,9 +25,8 @@ class _HomePageState extends State<HomePage> {
             IconButton(
               onPressed: () async {
                 Get.changeTheme(
-                  Get.isDarkMode ? ThemeData.light() : ThemeData.dark(),
+                  Get.isDarkMode ? AppTheme.lightTheme : AppTheme.darkTheme,
                 );
-                await Get.find<AppController>().toggleAppTheme();
               },
               icon: Icon(Icons.dark_mode),
             ),
