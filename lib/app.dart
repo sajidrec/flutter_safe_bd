@@ -14,11 +14,6 @@ class SafeBD extends StatefulWidget {
 
 class _SafeBDState extends State<SafeBD> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
