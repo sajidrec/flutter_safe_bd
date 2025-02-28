@@ -30,9 +30,45 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        drawer: Drawer(
+          elevation: 3,
+
+          child: ListView(
+            children: [
+              DrawerHeader(child: Text("SafeBD")),
+              InkWell(
+                onTap: () {},
+                child: ListTile(
+                  title: Text("Add / Remove trusted contact numbers"),
+                  leading: Icon(Icons.people),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: ListTile(
+                  title: Text("Important numbers"),
+                  leading: Icon(Icons.star),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: ListTile(
+                  title: Text("Settings"),
+                  leading: Icon(Icons.settings),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: ListTile(
+                  title: Text("About"),
+                  leading: Icon(Icons.info_outline),
+                ),
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           title: Text("SafeBD"),
-
           actions: [
             FittedBox(
               child: Column(

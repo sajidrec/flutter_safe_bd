@@ -50,5 +50,7 @@ class AppTheme {
         return Colors.white; // Track color when OFF
       }),
     ),
+
+    drawerTheme: DrawerThemeData(backgroundColor: Colors.white),
   );
 }
