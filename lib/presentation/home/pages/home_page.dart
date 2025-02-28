@@ -26,13 +26,30 @@ class _HomePageState extends State<HomePage> {
     await Get.find<HomePageController>().fetchCurrentPosition();
   }
 
+  bool v = false;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: Text("SafeBD"),
+
           actions: [
+            FittedBox(
+              child: Column(
+                children: [
+                  Switch(
+                    value: v,
+                    onChanged: (value) {
+                      v = value;
+                      setState(() {});
+                    },
+                  ),
+                  Text("Auto refresh"),
+                ],
+              ),
+            ),
             IconButton(
               onPressed: () async {
                 await Get.find<AppController>().toggleTheme();

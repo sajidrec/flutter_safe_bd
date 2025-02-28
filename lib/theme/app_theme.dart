@@ -11,6 +11,20 @@ class AppTheme {
       ),
     ),
     progressIndicatorTheme: ProgressIndicatorThemeData(color: Colors.black),
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return Colors.grey.shade300; // Thumb color when ON
+        }
+        return Colors.white; // Thumb color when OFF
+      }),
+      trackColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return Colors.green; // Track color when ON
+        }
+        return Colors.black; // Track color when OFF
+      }),
+    ),
   );
   static ThemeData lightTheme = ThemeData.light().copyWith(
     appBarTheme: AppBarTheme(backgroundColor: Color(0xffeeeeee), elevation: 2),
@@ -22,5 +36,19 @@ class AppTheme {
       ),
     ),
     progressIndicatorTheme: ProgressIndicatorThemeData(color: Colors.white),
+    switchTheme: SwitchThemeData(
+      thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return Colors.grey.shade300; // Thumb color when ON
+        }
+        return Colors.black; // Thumb color when OFF
+      }),
+      trackColor: WidgetStateProperty.resolveWith<Color>((states) {
+        if (states.contains(WidgetState.selected)) {
+          return Colors.green; // Track color when ON
+        }
+        return Colors.white; // Track color when OFF
+      }),
+    ),
   );
 }
