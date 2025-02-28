@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +17,12 @@ class HomePageController extends GetxController {
     speedAccuracy: 0,
   );
 
+  Timer? timer;
+
+  bool _autoRefreshButtonOn = false;
+
+  bool get getAutoRefreshButtonOn => _autoRefreshButtonOn;
+
   bool _updateLocationInProgress = false;
 
   bool get getUpdateLocationInProgress => _updateLocationInProgress;
@@ -30,6 +38,20 @@ class HomePageController extends GetxController {
     );
 
     _updateLocationInProgress = false;
+    update();
+  }
+
+  Future<void> updateLocationAfterInterval() async {
+    _autoRefreshButtonOn = true;
+    update();
+    timer = Timer.periodic(Duration(seconds: 10), (timer) async {
+      await fetchCurrentPosition();
+    });
+  }
+
+  void stopLocationUpdateInterval() {
+    timer?.cancel();
+    _autoRefreshButtonOn = false;
     update();
   }
 }

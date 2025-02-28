@@ -26,8 +26,6 @@ class _HomePageState extends State<HomePage> {
     await Get.find<HomePageController>().fetchCurrentPosition();
   }
 
-  bool v = false;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -39,11 +37,21 @@ class _HomePageState extends State<HomePage> {
             FittedBox(
               child: Column(
                 children: [
-                  Switch(
-                    value: v,
-                    onChanged: (value) {
-                      v = value;
-                      setState(() {});
+                  GetBuilder<HomePageController>(
+                    builder: (controller) {
+                      return Switch(
+                        value: controller.getAutoRefreshButtonOn,
+                        onChanged: (value) async {
+                          if (value) {
+                            await Get.find<HomePageController>()
+                                .updateLocationAfterInterval();
+                          } else {
+                            Get.find<HomePageController>()
+                                .stopLocationUpdateInterval();
+                          }
+                          setState(() {});
+                        },
+                      );
                     },
                   ),
                   Text("Auto refresh"),
@@ -76,7 +84,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 10),
                       SizedBox(
-                        width: Get.width / 2,
+                        width: Get.width / 1.5,
                         child: ElevatedButton(
                           onPressed: () async {
                             await controller.fetchCurrentPosition();
@@ -84,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                           child:
                               controller.getUpdateLocationInProgress
                                   ? Center(child: CircularProgressIndicator())
-                                  : Text("Update current location"),
+                                  : Text("Tap to update location"),
                         ),
                       ),
                     ],
