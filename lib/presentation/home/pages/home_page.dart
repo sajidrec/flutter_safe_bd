@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_safe_bd/app_controller/app_controller.dart';
 import 'package:flutter_safe_bd/presentation/home/controller/home_page_controller.dart';
 import 'package:flutter_safe_bd/services/permission_service.dart';
-import 'package:flutter_safe_bd/theme/app_theme.dart';
 import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,6 +21,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _initialPageSetup() async {
+    await Get.find<AppController>().initialThemeSetup();
     await PermissionService().checkLocationPermission();
     await Get.find<HomePageController>().fetchCurrentPosition();
   }
@@ -34,9 +35,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             IconButton(
               onPressed: () async {
-                Get.changeTheme(
-                  Get.isDarkMode ? AppTheme.lightTheme : AppTheme.darkTheme,
-                );
+                await Get.find<AppController>().toggleTheme();
               },
               icon: Icon(Icons.dark_mode),
             ),
