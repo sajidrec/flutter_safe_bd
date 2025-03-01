@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_safe_bd/app_controller/app_controller.dart';
 import 'package:flutter_safe_bd/presentation/home/controller/home_page_controller.dart';
+import 'package:flutter_safe_bd/routes/app_routes.dart';
 import 'package:flutter_safe_bd/services/permission_service.dart';
 import 'package:get/get.dart';
 
@@ -36,43 +37,7 @@ class _HomePageState extends State<HomePage> {
           await _buildExitDialog();
         },
         child: Scaffold(
-          drawer: Drawer(
-            elevation: 3,
-
-            child: ListView(
-              children: [
-                DrawerHeader(child: Text("SafeBD")),
-                InkWell(
-                  onTap: () {},
-                  child: ListTile(
-                    title: Text("Add / Remove trusted contact numbers"),
-                    leading: Icon(Icons.people),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: ListTile(
-                    title: Text("Important numbers"),
-                    leading: Icon(Icons.star),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: ListTile(
-                    title: Text("Settings"),
-                    leading: Icon(Icons.settings),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {},
-                  child: ListTile(
-                    title: Text("About"),
-                    leading: Icon(Icons.info_outline),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          drawer: _buildDrawer(),
           appBar: AppBar(
             title: Text("SafeBD"),
             actions: [
@@ -145,6 +110,49 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Drawer _buildDrawer() {
+    return Drawer(
+      elevation: 3,
+      child: ListView(
+        children: [
+          DrawerHeader(child: Text("SafeBD")),
+          InkWell(
+            onTap: () {
+              Get.toNamed(AppRoutes.addRemoveContact);
+            },
+            child: ListTile(
+              title: Text("Add / Remove trusted contact numbers"),
+              leading: Icon(Icons.people),
+            ),
+          ),
+          InkWell(
+            onTap: () {},
+            child: ListTile(
+              title: Text("Important numbers"),
+              leading: Icon(Icons.star),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Get.toNamed(AppRoutes.settings);
+            },
+            child: ListTile(
+              title: Text("Settings"),
+              leading: Icon(Icons.settings),
+            ),
+          ),
+          InkWell(
+            onTap: () {},
+            child: ListTile(
+              title: Text("About"),
+              leading: Icon(Icons.info_outline),
+            ),
+          ),
+        ],
       ),
     );
   }
