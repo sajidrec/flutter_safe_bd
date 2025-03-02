@@ -10,6 +10,7 @@ class AppTheme {
         foregroundColor: Color(0xff121212),
       ),
     ),
+    textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white),
     progressIndicatorTheme: ProgressIndicatorThemeData(color: Colors.black),
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
@@ -25,6 +26,25 @@ class AppTheme {
         return Colors.black; // Track color when OFF
       }),
     ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: Colors.white), // Normal border color
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          color: Colors.white,
+          width: 2,
+        ), // Border color when focused
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          color: Colors.white,
+        ), // Border color when enabled
+      ),
+    ),
   );
   static ThemeData lightTheme = ThemeData.light().copyWith(
     appBarTheme: AppBarTheme(backgroundColor: Color(0xffeeeeee), elevation: 2),
@@ -35,6 +55,7 @@ class AppTheme {
         foregroundColor: Color(0xffffffff),
       ),
     ),
+    textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.black),
     progressIndicatorTheme: ProgressIndicatorThemeData(color: Colors.white),
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith<Color>((states) {
@@ -52,5 +73,25 @@ class AppTheme {
     ),
 
     drawerTheme: DrawerThemeData(backgroundColor: Colors.white),
+
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: Colors.black), // Normal border color
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          color: Colors.black,
+          width: 2,
+        ), // Border color when focused
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(
+          color: Colors.black,
+        ), // Border color when enabled
+      ),
+    ),
   );
 }

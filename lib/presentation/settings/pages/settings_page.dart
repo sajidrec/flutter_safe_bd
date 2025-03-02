@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_safe_bd/routes/app_routes.dart';
+import 'package:get/get.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -14,14 +16,18 @@ class SettingsPage extends StatelessWidget {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.customMessage);
+                  },
                   child: ListTile(
                     title: Text("Customize message"),
                     leading: Icon(Icons.message_rounded),
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(AppRoutes.refreshRate);
+                  },
                   child: ListTile(
                     title: Text("Refresh rate"),
                     leading: Icon(Icons.refresh),
