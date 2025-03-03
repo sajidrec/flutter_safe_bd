@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RefreshRatePage extends StatefulWidget {
@@ -9,6 +8,7 @@ class RefreshRatePage extends StatefulWidget {
 }
 
 class _RefreshRatePageState extends State<RefreshRatePage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _refreshRateTEC = TextEditingController();
 
   @override
@@ -28,12 +28,27 @@ class _RefreshRatePageState extends State<RefreshRatePage> {
             child: Column(
               children: [
                 const SizedBox(height: 3),
-                TextField(
-                  controller: _refreshRateTEC,
-                  keyboardType: TextInputType.number,
+                Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    controller: _refreshRateTEC,
+                    validator: (value) {
+                      if ((value?.isEmpty ?? true) ||
+                          (int.parse(value ?? "0")) <= 0) {
+                        return "must be greater than 0 second";
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.number,
+                  ),
                 ),
                 const SizedBox(height: 3),
-                ElevatedButton(onPressed: () {}, child: Text("Apply")),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {}
+                  },
+                  child: Text("Apply"),
+                ),
               ],
             ),
           ),
