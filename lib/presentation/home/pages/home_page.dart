@@ -130,7 +130,9 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(AppRoutes.importantNumbers);
+            },
             child: ListTile(
               title: Text("Important numbers"),
               leading: Icon(Icons.star),
