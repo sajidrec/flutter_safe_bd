@@ -8,6 +8,8 @@ import 'package:flutter_safe_bd/routes/app_routes.dart';
 import 'package:flutter_safe_bd/services/permission_service.dart';
 import 'package:get/get.dart';
 
+import '../models/contact_model.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -27,6 +29,94 @@ class _HomePageState extends State<HomePage> {
     await PermissionService().checkLocationPermission();
     await Get.find<HomePageController>().fetchCurrentPosition();
   }
+
+  final List<ContactModel> _listOfContacts = [
+    ContactModel(
+      name: "MD",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Sajid",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+    ContactModel(
+      name: "Hossain",
+      phoneNumber: "01789511097",
+      whatsapp: "01789511097",
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -81,36 +171,51 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    GetBuilder<HomePageController>(
-                      builder: (controller) {
-                        return Text(
-                          "Latitude ${controller.getCurrentPosition.latitude}",
-                        );
-                      },
+                    _buildHeaderSection(),
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: Text("Tap to SMS all trusted persons"),
                     ),
-                    GetBuilder<HomePageController>(
-                      builder: (controller) {
-                        return Text(
-                          "Longitude ${controller.getCurrentPosition.longitude}",
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 10),
-                    GetBuilder<HomePageController>(
-                      builder: (controller) {
-                        return SizedBox(
-                          width: Get.width / 1.5,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              await controller.fetchCurrentPosition();
-                            },
-                            child:
-                                controller.getUpdateLocationInProgress
-                                    ? Center(child: CircularProgressIndicator())
-                                    : Text("Tap to update location"),
+                    const SizedBox(height: 12),
+                    ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      itemBuilder:
+                          (context, index) => ListTile(
+                            title: Text(_listOfContacts[index].name ?? ""),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Phone :  ${_listOfContacts[index].phoneNumber ?? ""}",
+                                ),
+                                Text(
+                                  "Whatsapp :  ${_listOfContacts[index].whatsapp ?? ""}",
+                                ),
+                              ],
+                            ),
+                            trailing: Wrap(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(Icons.message),
+                                ),
+                                const SizedBox(width: 10),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Image.asset(
+                                    "assets/icons/whatsapp_icon.png",
+                                    width: 24,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Text("Whatsapp"),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        );
-                      },
+                      itemCount: _listOfContacts.length,
                     ),
                   ],
                 ),
@@ -119,6 +224,40 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  Column _buildHeaderSection() {
+    return Column(
+      children: [
+        GetBuilder<HomePageController>(
+          builder: (controller) {
+            return Text("Latitude ${controller.getCurrentPosition.latitude}");
+          },
+        ),
+        GetBuilder<HomePageController>(
+          builder: (controller) {
+            return Text("Longitude ${controller.getCurrentPosition.longitude}");
+          },
+        ),
+        const SizedBox(height: 10),
+        GetBuilder<HomePageController>(
+          builder: (controller) {
+            return SizedBox(
+              width: Get.width / 1.5,
+              child: ElevatedButton(
+                onPressed: () async {
+                  await controller.fetchCurrentPosition();
+                },
+                child:
+                    controller.getUpdateLocationInProgress
+                        ? Center(child: CircularProgressIndicator())
+                        : Text("Tap to update location"),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 
