@@ -78,19 +78,27 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: SizedBox(
                 width: double.infinity,
-                child: GetBuilder<HomePageController>(
-                  builder: (controller) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GetBuilder<HomePageController>(
+                      builder: (controller) {
+                        return Text(
                           "Latitude ${controller.getCurrentPosition.latitude}",
-                        ),
-                        Text(
+                        );
+                      },
+                    ),
+                    GetBuilder<HomePageController>(
+                      builder: (controller) {
+                        return Text(
                           "Longitude ${controller.getCurrentPosition.longitude}",
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    GetBuilder<HomePageController>(
+                      builder: (controller) {
+                        return SizedBox(
                           width: Get.width / 1.5,
                           child: ElevatedButton(
                             onPressed: () async {
@@ -101,10 +109,10 @@ class _HomePageState extends State<HomePage> {
                                     ? Center(child: CircularProgressIndicator())
                                     : Text("Tap to update location"),
                           ),
-                        ),
-                      ],
-                    );
-                  },
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
