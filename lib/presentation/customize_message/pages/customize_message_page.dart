@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_safe_bd/utils/custom_message.dart';
+import 'package:geolocator/geolocator.dart';
 
 class CustomizeMessagePage extends StatefulWidget {
   const CustomizeMessagePage({super.key});
@@ -39,7 +40,27 @@ class _CustomizeMessagePageState extends State<CustomizeMessagePage> {
                 const SizedBox(height: 5),
                 ElevatedButton(onPressed: () {}, child: Text("Apply")),
                 const SizedBox(height: 5),
-                Text(CustomMessage.defaultMessage),
+                Text(
+                  "This is just example what you're message will look like. Position data is not be accurate here.",
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  CustomMessage.defaultMessage(
+                    position: Position(
+                      longitude: 0,
+                      latitude: 0,
+                      timestamp: DateTime.now(),
+                      accuracy: 0,
+                      altitude: 0,
+                      altitudeAccuracy: 0,
+                      heading: 0,
+                      headingAccuracy: 0,
+                      speed: 0,
+                      speedAccuracy: 0,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

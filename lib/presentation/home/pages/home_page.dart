@@ -7,7 +7,9 @@ import 'package:flutter_safe_bd/presentation/add_remove_contact_page/controllers
 import 'package:flutter_safe_bd/presentation/home/controller/home_page_controller.dart';
 import 'package:flutter_safe_bd/routes/app_routes.dart';
 import 'package:flutter_safe_bd/services/permission_service.dart';
+import 'package:flutter_safe_bd/utils/custom_message.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -116,7 +118,25 @@ class _HomePageState extends State<HomePage> {
                                 trailing: Wrap(
                                   children: [
                                     IconButton(
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        final Uri smsUri = Uri(
+                                          scheme: 'sms',
+                                          path:
+                                              controller
+                                                  .getListOfContacts[index]
+                                                  .phoneNumber,
+                                          queryParameters: <String, String>{
+                                            'body':
+                                                CustomMessage.defaultMessage(
+                                                  position:
+                                                      controller
+                                                          .getCurrentPosition,
+                                                ),
+                                          },
+                                        );
+
+                                        await launchUrl(smsUri);
+                                      },
                                       icon: Icon(Icons.message),
                                     ),
                                     const SizedBox(width: 10),
