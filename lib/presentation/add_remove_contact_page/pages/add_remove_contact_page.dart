@@ -51,41 +51,43 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
                 const SizedBox(height: 5),
                 _buildAddForm(context),
                 const SizedBox(height: 12),
-                GetBuilder<AddRemoveContactPageController>(
-                  builder: (controller) {
-                    return ListView.builder(
-                      primary: false,
-                      shrinkWrap: true,
-                      itemBuilder:
-                          (context, index) => ListTile(
-                            title: Text(
-                              controller.getListOfContacts[index].name ?? "",
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Phone :  ${controller.getListOfContacts[index].phoneNumber ?? ""}",
-                                ),
-                                Text(
-                                  "Whatsapp :  ${controller.getListOfContacts[index].whatsapp ?? ""}",
-                                ),
-                              ],
-                            ),
-                            trailing: IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.remove_circle_outline),
-                            ),
-                          ),
-                      itemCount: controller.getListOfContacts.length,
-                    );
-                  },
-                ),
+                _buildContactListView(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  GetBuilder<AddRemoveContactPageController> _buildContactListView() {
+    return GetBuilder<AddRemoveContactPageController>(
+      builder: (controller) {
+        return ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          itemBuilder:
+              (context, index) => ListTile(
+                title: Text(controller.getListOfContacts[index].name ?? ""),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Phone :  ${(controller.getListOfContacts[index].phoneNumber ?? "").isEmpty ? "No data" : controller.getListOfContacts[index].phoneNumber}",
+                    ),
+                    Text(
+                      "Whatsapp :  ${(controller.getListOfContacts[index].whatsapp ?? "").isEmpty ? "No data" : "wa.me/88${controller.getListOfContacts[index].whatsapp}"}",
+                    ),
+                  ],
+                ),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.remove_circle_outline),
+                ),
+              ),
+          itemCount: controller.getListOfContacts.length,
+        );
+      },
     );
   }
 
@@ -121,6 +123,11 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
               if ((value?.isEmpty ?? true) && (_whatsAppTec.text.isEmpty)) {
                 return "Phone number or Whatsapp required";
               }
+              if ((value?.length ?? 0) > 0) {
+                if (value!.length != 11) {
+                  return "Must be 11 digit";
+                }
+              }
               return null;
             },
             decoration: InputDecoration(
@@ -131,15 +138,20 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
           TextFormField(
             controller: _whatsAppTec,
             focusNode: _focusNodeWhatsApp,
+            keyboardType: TextInputType.number,
             validator: (value) {
               if ((value?.isEmpty ?? true) && (_phoneNumberTec.text.isEmpty)) {
                 return "Phone number or Whatsapp required";
               }
+
+              if ((value?.length ?? 0) > 0) {
+                if (value!.length != 11) {
+                  return "Must be 11 digit";
+                }
+              }
               return null;
             },
-            decoration: InputDecoration(
-              hintText: "Whatsapp (number or group code only)",
-            ),
+            decoration: InputDecoration(hintText: "Whatsapp number (11 digit)"),
           ),
           const SizedBox(height: 10),
           SizedBox(
