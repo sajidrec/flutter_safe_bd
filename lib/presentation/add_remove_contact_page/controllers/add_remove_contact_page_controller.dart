@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter_safe_bd/constants/constant_keys.dart';
+import 'package:flutter_safe_bd/models/contact_model.dart';
+import 'package:flutter_safe_bd/presentation/home/controller/home_page_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../models/contact_model.dart';
 
 class AddRemoveContactPageController extends GetxController {
   List<ContactModel> _listOfContacts = [];
@@ -53,6 +53,8 @@ class AddRemoveContactPageController extends GetxController {
       _listOfContacts.add(ContactModel.fromJson(jsonDecode(element)));
     }
 
+    Get.find<HomePageController>().fetchContactList();
+
     update();
   }
 
@@ -70,6 +72,8 @@ class AddRemoveContactPageController extends GetxController {
       ConstantKeys.contactListKey,
       trustedContactList,
     );
+
+    Get.find<HomePageController>().fetchContactList();
 
     update();
   }

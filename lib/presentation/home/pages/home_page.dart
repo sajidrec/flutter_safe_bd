@@ -3,12 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_safe_bd/app_controller/app_controller.dart';
+import 'package:flutter_safe_bd/presentation/add_remove_contact_page/controllers/add_remove_contact_page_controller.dart';
 import 'package:flutter_safe_bd/presentation/home/controller/home_page_controller.dart';
 import 'package:flutter_safe_bd/routes/app_routes.dart';
 import 'package:flutter_safe_bd/services/permission_service.dart';
 import 'package:get/get.dart';
-
-import '../models/contact_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,95 +27,9 @@ class _HomePageState extends State<HomePage> {
     await Get.find<AppController>().initialThemeSetup();
     await PermissionService().checkLocationPermission();
     await Get.find<HomePageController>().fetchCurrentPosition();
+    await Get.find<AddRemoveContactPageController>().fetchContacts();
+    Get.find<HomePageController>().fetchContactList();
   }
-
-  final List<ContactModel> _listOfContacts = [
-    ContactModel(
-      name: "MD",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Sajid",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -178,44 +91,51 @@ class _HomePageState extends State<HomePage> {
                       child: Text("Tap to SMS all trusted persons"),
                     ),
                     const SizedBox(height: 12),
-                    ListView.builder(
-                      primary: false,
-                      shrinkWrap: true,
-                      itemBuilder:
-                          (context, index) => ListTile(
-                            title: Text(_listOfContacts[index].name ?? ""),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Phone :  ${_listOfContacts[index].phoneNumber ?? ""}",
+                    GetBuilder<HomePageController>(
+                      builder: (controller) {
+                        return ListView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          itemBuilder:
+                              (context, index) => ListTile(
+                                title: Text(
+                                  controller.getListOfContacts[index].name ??
+                                      "",
                                 ),
-                                Text(
-                                  "Whatsapp :  ${_listOfContacts[index].whatsapp ?? ""}",
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Phone :  ${controller.getListOfContacts[index].phoneNumber ?? ""}",
+                                    ),
+                                    Text(
+                                      "Whatsapp :  ${controller.getListOfContacts[index].whatsapp ?? ""}",
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            trailing: Wrap(
-                              children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(Icons.message),
+                                trailing: Wrap(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.message),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Image.asset(
+                                        "assets/icons/whatsapp_icon.png",
+                                        width: 24,
+                                        errorBuilder:
+                                            (context, error, stackTrace) =>
+                                                Text("Whatsapp"),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                const SizedBox(width: 10),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset(
-                                    "assets/icons/whatsapp_icon.png",
-                                    width: 24,
-                                    errorBuilder:
-                                        (context, error, stackTrace) =>
-                                            Text("Whatsapp"),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                      itemCount: _listOfContacts.length,
+                              ),
+                          itemCount: controller.getListOfContacts.length,
+                        );
+                      },
                     ),
                   ],
                 ),

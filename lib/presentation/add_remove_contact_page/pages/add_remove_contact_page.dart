@@ -156,7 +156,7 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
               return null;
             },
             decoration: InputDecoration(
-              hintText: "Phone number (for sending sms)",
+              hintText: "Phone number (for sending sms 11 digits)",
             ),
           ),
           const SizedBox(height: 8),
@@ -176,7 +176,9 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
               }
               return null;
             },
-            decoration: InputDecoration(hintText: "Whatsapp number (11 digit)"),
+            decoration: InputDecoration(
+              hintText: "Whatsapp number (11 digits)",
+            ),
           ),
           const SizedBox(height: 10),
           SizedBox(

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter_safe_bd/models/contact_model.dart';
+import 'package:flutter_safe_bd/presentation/add_remove_contact_page/controllers/add_remove_contact_page_controller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +31,10 @@ class HomePageController extends GetxController {
 
   Position get getCurrentPosition => _position;
 
+  List<ContactModel> _listOfContacts = [];
+
+  List<ContactModel> get getListOfContacts => _listOfContacts;
+
   Future<void> fetchCurrentPosition() async {
     _updateLocationInProgress = true;
     update();
@@ -52,6 +58,12 @@ class HomePageController extends GetxController {
   void stopLocationUpdateInterval() {
     timer?.cancel();
     _autoRefreshButtonOn = false;
+    update();
+  }
+
+  void fetchContactList() {
+    _listOfContacts =
+        Get.find<AddRemoveContactPageController>().getListOfContacts;
     update();
   }
 }
