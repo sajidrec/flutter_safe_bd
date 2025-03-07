@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_safe_bd/presentation/add_remove_contact_page/models/contact_model.dart';
+import 'package:flutter_safe_bd/presentation/add_remove_contact_page/controllers/add_remove_contact_page_controller.dart';
 import 'package:get/get.dart';
 
 class AddRemoveContactPage extends StatefulWidget {
@@ -18,94 +18,6 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
   final FocusNode _focusNodePhoneNumber = FocusNode();
   final FocusNode _focusNodeWhatsApp = FocusNode();
 
-  final List<ContactModel> _listOfContacts = [
-    ContactModel(
-      name: "MD",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Sajid",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-    ContactModel(
-      name: "Hossain",
-      phoneNumber: "01789511097",
-      whatsapp: "01789511097",
-    ),
-  ];
-
   @override
   void dispose() {
     _nameTEC.dispose();
@@ -114,6 +26,16 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
     _focusNodePhoneNumber.dispose();
     _focusNodeWhatsApp.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    initialPageSetup();
+    super.initState();
+  }
+
+  Future<void> initialPageSetup() async {
+    await Get.find<AddRemoveContactPageController>().fetchContacts();
   }
 
   @override
@@ -129,29 +51,35 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
                 const SizedBox(height: 5),
                 _buildAddForm(context),
                 const SizedBox(height: 12),
-                ListView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  itemBuilder:
-                      (context, index) => ListTile(
-                        title: Text(_listOfContacts[index].name ?? ""),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Phone :  ${_listOfContacts[index].phoneNumber ?? ""}",
+                GetBuilder<AddRemoveContactPageController>(
+                  builder: (controller) {
+                    return ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      itemBuilder:
+                          (context, index) => ListTile(
+                            title: Text(
+                              controller.getListOfContacts[index].name ?? "",
                             ),
-                            Text(
-                              "Whatsapp :  ${_listOfContacts[index].whatsapp ?? ""}",
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Phone :  ${controller.getListOfContacts[index].phoneNumber ?? ""}",
+                                ),
+                                Text(
+                                  "Whatsapp :  ${controller.getListOfContacts[index].whatsapp ?? ""}",
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        trailing: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.remove_circle_outline),
-                        ),
-                      ),
-                  itemCount: _listOfContacts.length,
+                            trailing: IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.remove_circle_outline),
+                            ),
+                          ),
+                      itemCount: controller.getListOfContacts.length,
+                    );
+                  },
                 ),
               ],
             ),
@@ -216,11 +144,21 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
           const SizedBox(height: 10),
           SizedBox(
             width: Get.width / 2,
-            child: ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {}
+            child: GetBuilder<AddRemoveContactPageController>(
+              builder: (controller) {
+                return ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      await controller.addContact(
+                        name: _nameTEC.text,
+                        phone: _phoneNumberTec.text,
+                        whatsapp: _whatsAppTec.text,
+                      );
+                    }
+                  },
+                  child: Text("Add"),
+                );
               },
-              child: Text("Add"),
             ),
           ),
         ],
