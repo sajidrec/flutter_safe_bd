@@ -55,4 +55,22 @@ class AddRemoveContactPageController extends GetxController {
 
     update();
   }
+
+  Future<void> removeContact({required int index}) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    _listOfContacts.removeAt(index);
+
+    List<String> trustedContactList =
+        sharedPreferences.getStringList(ConstantKeys.contactListKey) ?? [];
+
+    trustedContactList.removeAt(index);
+
+    await sharedPreferences.setStringList(
+      ConstantKeys.contactListKey,
+      trustedContactList,
+    );
+
+    update();
+  }
 }

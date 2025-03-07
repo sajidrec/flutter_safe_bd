@@ -81,7 +81,32 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
                   ],
                 ),
                 trailing: IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await Get.dialog(
+                      barrierDismissible: true,
+                      AlertDialog(
+                        title: Text('Caution!!!'),
+                        content: Text('You sure want to remove this contact?'),
+                        actions: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            child: Text('No'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () async {
+                              await controller.removeContact(index: index);
+                              if (Get.isDialogOpen ?? false) {
+                                Get.back();
+                              }
+                            },
+                            child: Text('Yes 100%'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                   icon: Icon(Icons.remove_circle_outline),
                 ),
               ),
