@@ -7,9 +7,7 @@ import 'package:flutter_safe_bd/presentation/add_remove_contact_page/controllers
 import 'package:flutter_safe_bd/presentation/home/controller/home_page_controller.dart';
 import 'package:flutter_safe_bd/routes/app_routes.dart';
 import 'package:flutter_safe_bd/services/permission_service.dart';
-import 'package:flutter_safe_bd/utils/custom_message.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -89,7 +87,9 @@ class _HomePageState extends State<HomePage> {
                     _buildHeaderSection(),
                     const SizedBox(height: 12),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        await Get.find<HomePageController>().sendSmsToAll();
+                      },
                       child: Text("Tap to SMS all trusted persons"),
                     ),
                     const SizedBox(height: 12),
@@ -119,23 +119,9 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     IconButton(
                                       onPressed: () async {
-                                        final Uri smsUri = Uri(
-                                          scheme: 'sms',
-                                          path:
-                                              controller
-                                                  .getListOfContacts[index]
-                                                  .phoneNumber,
-                                          queryParameters: <String, String>{
-                                            'body':
-                                                CustomMessage.defaultMessage(
-                                                  position:
-                                                      controller
-                                                          .getCurrentPosition,
-                                                ),
-                                          },
+                                        controller.sendSmsSingleContact(
+                                          index: index,
                                         );
-
-                                        await launchUrl(smsUri);
                                       },
                                       icon: Icon(Icons.message),
                                     ),
