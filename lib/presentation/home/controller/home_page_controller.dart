@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_safe_bd/models/contact_model.dart';
 import 'package:flutter_safe_bd/presentation/add_remove_contact_page/controllers/add_remove_contact_page_controller.dart';
+import 'package:flutter_safe_bd/presentation/refresh_rate/controllers/refresh_rate_page_controller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -53,7 +54,9 @@ class HomePageController extends GetxController {
   Future<void> updateLocationAfterInterval() async {
     _autoRefreshButtonOn = true;
     update();
-    timer = Timer.periodic(Duration(seconds: 10), (timer) async {
+    int intervalTime = 10;
+    intervalTime = await Get.find<RefreshRatePageController>().getRefreshRate();
+    timer = Timer.periodic(Duration(seconds: intervalTime), (timer) async {
       await fetchCurrentPosition();
     });
   }

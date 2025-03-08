@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_safe_bd/presentation/refresh_rate/controllers/refresh_rate_page_controller.dart';
+import 'package:get/get.dart';
 
 class RefreshRatePage extends StatefulWidget {
   const RefreshRatePage({super.key});
@@ -15,6 +17,17 @@ class _RefreshRatePageState extends State<RefreshRatePage> {
   void dispose() {
     _refreshRateTEC.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    _initialPageSetup();
+    super.initState();
+  }
+
+  Future<void> _initialPageSetup() async {
+    _refreshRateTEC.text =
+        "${await Get.find<RefreshRatePageController>().getRefreshRate()}";
   }
 
   @override
@@ -43,9 +56,15 @@ class _RefreshRatePageState extends State<RefreshRatePage> {
                   ),
                 ),
                 const SizedBox(height: 3),
+                Text("Refresh interval in seconds"),
+                const SizedBox(height: 3),
                 ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {}
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      await Get.find<RefreshRatePageController>()
+                          .addRefreshRate(rate: _refreshRateTEC.text);
+                      Get.back();
+                    }
                   },
                   child: Text("Apply"),
                 ),
