@@ -76,7 +76,7 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
                       "Phone :  ${(controller.getListOfContacts[index].phoneNumber ?? "").isEmpty ? "No data" : controller.getListOfContacts[index].phoneNumber}",
                     ),
                     Text(
-                      "Whatsapp :  ${(controller.getListOfContacts[index].whatsapp ?? "").isEmpty ? "No data" : "wa.me/88${controller.getListOfContacts[index].whatsapp}"}",
+                      "Whatsapp :  ${(controller.getListOfContacts[index].whatsapp ?? "").isEmpty ? "No data" : "${controller.getListOfContacts[index].whatsapp}"}",
                     ),
                   ],
                 ),
@@ -193,6 +193,14 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
                         phone: _phoneNumberTec.text,
                         whatsapp: _whatsAppTec.text,
                       );
+
+                      _nameTEC.text = "";
+                      _phoneNumberTec.text = "";
+                      _whatsAppTec.text = "";
+
+                      if (context.mounted) {
+                        FocusScope.of(context).unfocus();
+                      }
                     }
                   },
                   child: Text("Add"),
