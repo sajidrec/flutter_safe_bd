@@ -93,56 +93,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text("Tap to SMS all trusted persons"),
                     ),
                     const SizedBox(height: 12),
-                    GetBuilder<HomePageController>(
-                      builder: (controller) {
-                        return ListView.builder(
-                          primary: false,
-                          shrinkWrap: true,
-                          itemBuilder:
-                              (context, index) => ListTile(
-                                title: Text(
-                                  controller.getListOfContacts[index].name ??
-                                      "",
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Phone :  ${controller.getListOfContacts[index].phoneNumber ?? ""}",
-                                    ),
-                                    Text(
-                                      "Whatsapp :  ${controller.getListOfContacts[index].whatsapp ?? ""}",
-                                    ),
-                                  ],
-                                ),
-                                trailing: Wrap(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () async {
-                                        controller.sendSmsSingleContact(
-                                          index: index,
-                                        );
-                                      },
-                                      icon: Icon(Icons.message),
-                                    ),
-                                    const SizedBox(width: 10),
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Image.asset(
-                                        "assets/icons/whatsapp_icon.png",
-                                        width: 24,
-                                        errorBuilder:
-                                            (context, error, stackTrace) =>
-                                                Text("Whatsapp"),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                          itemCount: controller.getListOfContacts.length,
-                        );
-                      },
-                    ),
+                    _buildContactList(),
                   ],
                 ),
               ),
@@ -150,6 +101,63 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+    );
+  }
+
+  GetBuilder<HomePageController> _buildContactList() {
+    return GetBuilder<HomePageController>(
+      builder: (controller) {
+        return ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          itemBuilder:
+              (context, index) => ListTile(
+                title: Text(controller.getListOfContacts[index].name ?? ""),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Phone :  ${(controller.getListOfContacts[index].phoneNumber ?? "").isEmpty ? "No data" : (controller.getListOfContacts[index].phoneNumber ?? "")}",
+                    ),
+                    Text(
+                      "Whatsapp :  ${(controller.getListOfContacts[index].whatsapp ?? "").isEmpty ? "No data" : controller.getListOfContacts[index].whatsapp ?? ""}",
+                    ),
+                  ],
+                ),
+                trailing: Wrap(
+                  children: [
+                    (controller
+                                .getListOfContacts[index]
+                                .phoneNumber
+                                ?.isNotEmpty ??
+                            false)
+                        ? IconButton(
+                          onPressed: () async {
+                            controller.sendSmsSingleContact(index: index);
+                          },
+                          icon: Icon(Icons.message),
+                        )
+                        : SizedBox.shrink(),
+                    // const SizedBox(width: 10),
+                    (controller.getListOfContacts[index].whatsapp?.isNotEmpty ??
+                            false)
+                        ? IconButton(
+                          onPressed: () {},
+                          icon: Image.asset(
+                            "assets/icons/whatsapp_icon.png",
+                            width: 24,
+                            errorBuilder:
+                                (context, error, stackTrace) =>
+                                    Text("Whatsapp"),
+                          ),
+                        )
+                        : SizedBox.shrink(),
+                  ],
+                ),
+              ),
+          itemCount: controller.getListOfContacts.length,
+        );
+      },
     );
   }
 
