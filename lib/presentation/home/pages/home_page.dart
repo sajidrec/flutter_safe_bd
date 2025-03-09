@@ -142,7 +142,12 @@ class _HomePageState extends State<HomePage> {
                     (controller.getListOfContacts[index].whatsapp?.isNotEmpty ??
                             false)
                         ? IconButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await controller.sendWhatsAppMessage(
+                              controller.getListOfContacts[index].whatsapp ??
+                                  "",
+                            );
+                          },
                           icon: Image.asset(
                             "assets/icons/whatsapp_icon.png",
                             width: 24,

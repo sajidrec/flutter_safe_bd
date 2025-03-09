@@ -102,4 +102,12 @@ class HomePageController extends GetxController {
 
     await launchUrl(smsUri);
   }
+
+  Future<void> sendWhatsAppMessage(String phoneNumber) async {
+    final Uri url = Uri.parse(
+      "https://wa.me/+88$phoneNumber?text=${Uri.encodeComponent(CustomMessage.defaultMessage(position: _position))}",
+    );
+
+    await launchUrl(url, mode: LaunchMode.externalApplication);
+  }
 }
