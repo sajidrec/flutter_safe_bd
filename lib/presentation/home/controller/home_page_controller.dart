@@ -73,16 +73,16 @@ class HomePageController extends GetxController {
     update();
   }
 
-  Future<void> sendSmsSingleContact({required int index}) async {
+  Future<void> sendSmsSingleContact({required String phoneNumber}) async {
     final Uri smsUri = Uri(
       scheme: 'sms',
-      path: _listOfContacts[index].phoneNumber,
+      path: phoneNumber,
       queryParameters: <String, String>{
         'body': CustomMessage.defaultMessage(position: _position),
       },
     );
 
-    await launchUrl(smsUri);
+    await launchUrl(smsUri, mode: LaunchMode.externalApplication);
   }
 
   Future<void> sendSmsToAll() async {
@@ -100,12 +100,12 @@ class HomePageController extends GetxController {
       },
     );
 
-    await launchUrl(smsUri);
+    await launchUrl(smsUri, mode: LaunchMode.externalApplication);
   }
 
   Future<void> sendWhatsAppMessage(String phoneNumber) async {
     final Uri url = Uri.parse(
-      "https://wa.me/+88$phoneNumber?text=${Uri.encodeComponent(CustomMessage.defaultMessage(position: _position))}",
+      "https://wa.me/$phoneNumber?text=${Uri.encodeComponent(CustomMessage.defaultMessage(position: _position))}",
     );
 
     await launchUrl(url, mode: LaunchMode.externalApplication);

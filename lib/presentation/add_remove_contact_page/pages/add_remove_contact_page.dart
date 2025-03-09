@@ -73,10 +73,10 @@ class _AddRemoveContactPageState extends State<AddRemoveContactPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Phone :  ${(controller.getListOfContacts[index].phoneNumber ?? "").isEmpty ? "No data" : controller.getListOfContacts[index].phoneNumber}",
+                      "Phone :  ${(controller.getListOfContacts[index].phoneNumber?.length ?? 0) <= 3 ? "No data" : controller.getListOfContacts[index].phoneNumber}",
                     ),
                     Text(
-                      "Whatsapp :  ${(controller.getListOfContacts[index].whatsapp ?? "").isEmpty ? "No data" : "${controller.getListOfContacts[index].whatsapp}"}",
+                      "Whatsapp :  ${(controller.getListOfContacts[index].whatsapp?.length ?? 0) <= 3 ? "No data" : "${controller.getListOfContacts[index].whatsapp}"}",
                     ),
                   ],
                 ),

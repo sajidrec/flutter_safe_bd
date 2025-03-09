@@ -117,30 +117,35 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Phone :  ${(controller.getListOfContacts[index].phoneNumber ?? "").isEmpty ? "No data" : (controller.getListOfContacts[index].phoneNumber ?? "")}",
+                      "Phone :  ${(controller.getListOfContacts[index].phoneNumber?.length ?? 0) <= 3 ? "No data" : (controller.getListOfContacts[index].phoneNumber ?? "")}",
                     ),
                     Text(
-                      "Whatsapp :  ${(controller.getListOfContacts[index].whatsapp ?? "").isEmpty ? "No data" : controller.getListOfContacts[index].whatsapp ?? ""}",
+                      "Whatsapp :  ${(controller.getListOfContacts[index].whatsapp?.length ?? 0) <= 3 ? "No data" : controller.getListOfContacts[index].whatsapp ?? ""}",
                     ),
                   ],
                 ),
                 trailing: Wrap(
                   children: [
-                    (controller
-                                .getListOfContacts[index]
-                                .phoneNumber
-                                ?.isNotEmpty ??
-                            false)
+                    ((controller.getListOfContacts[index].phoneNumber?.length ??
+                                0) >
+                            3)
                         ? IconButton(
                           onPressed: () async {
-                            controller.sendSmsSingleContact(index: index);
+                            controller.sendSmsSingleContact(
+                              phoneNumber:
+                                  controller
+                                      .getListOfContacts[index]
+                                      .phoneNumber ??
+                                  "",
+                            );
                           },
                           icon: Icon(Icons.message),
                         )
                         : SizedBox.shrink(),
                     // const SizedBox(width: 10),
-                    (controller.getListOfContacts[index].whatsapp?.isNotEmpty ??
-                            false)
+                    ((controller.getListOfContacts[index].whatsapp?.length ??
+                                0) >
+                            3)
                         ? IconButton(
                           onPressed: () async {
                             await controller.sendWhatsAppMessage(

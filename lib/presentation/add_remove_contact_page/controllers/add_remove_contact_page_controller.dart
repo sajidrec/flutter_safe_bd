@@ -38,7 +38,11 @@ class AddRemoveContactPageController extends GetxController {
 
     trustedContactList.add(
       jsonEncode(
-        ContactModel(name: name, phoneNumber: phone, whatsapp: whatsapp),
+        ContactModel(
+          name: name,
+          phoneNumber: "+88$phone",
+          whatsapp: "+88$whatsapp",
+        ),
       ),
     );
 
