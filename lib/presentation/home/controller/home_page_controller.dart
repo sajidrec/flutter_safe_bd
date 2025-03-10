@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_safe_bd/models/contact_model.dart';
 import 'package:flutter_safe_bd/presentation/add_remove_contact_page/controllers/add_remove_contact_page_controller.dart';
+import 'package:flutter_safe_bd/presentation/customize_message/controllers/customize_message_page_controller.dart';
 import 'package:flutter_safe_bd/presentation/refresh_rate/controllers/refresh_rate_page_controller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -78,7 +79,8 @@ class HomePageController extends GetxController {
       scheme: 'sms',
       path: phoneNumber,
       queryParameters: <String, String>{
-        'body': CustomMessage.defaultMessage(position: _position),
+        'body':
+            "${Get.find<CustomizeMessagePageController>().getCustomMessage}\n${CustomMessage.defaultMessage(position: _position)}",
       },
     );
 
@@ -96,7 +98,8 @@ class HomePageController extends GetxController {
       scheme: 'sms',
       path: allNumberList.join(","),
       queryParameters: <String, String>{
-        'body': CustomMessage.defaultMessage(position: _position),
+        'body':
+            "${Get.find<CustomizeMessagePageController>().getCustomMessage}\n${CustomMessage.defaultMessage(position: _position)}",
       },
     );
 
@@ -105,7 +108,7 @@ class HomePageController extends GetxController {
 
   Future<void> sendWhatsAppMessage(String phoneNumber) async {
     final Uri url = Uri.parse(
-      "https://wa.me/$phoneNumber?text=${Uri.encodeComponent(CustomMessage.defaultMessage(position: _position))}",
+      "https://wa.me/$phoneNumber?text=${Uri.encodeComponent("${Get.find<CustomizeMessagePageController>().getCustomMessage}\n${CustomMessage.defaultMessage(position: _position)}")}",
     );
 
     await launchUrl(url, mode: LaunchMode.externalApplication);

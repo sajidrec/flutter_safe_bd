@@ -1,5 +1,6 @@
 import 'package:flutter_safe_bd/app_controller/app_controller.dart';
 import 'package:flutter_safe_bd/presentation/add_remove_contact_page/controllers/add_remove_contact_page_controller.dart';
+import 'package:flutter_safe_bd/presentation/customize_message/controllers/customize_message_page_controller.dart';
 import 'package:flutter_safe_bd/presentation/home/controller/home_page_controller.dart';
 import 'package:get/get.dart';
 
@@ -12,5 +13,6 @@ class ControllerBindings extends Bindings {
     Get.put(HomePageController());
     Get.put(AddRemoveContactPageController());
     Get.put(RefreshRatePageController());
+    Get.put(CustomizeMessagePageController());
   }
 }

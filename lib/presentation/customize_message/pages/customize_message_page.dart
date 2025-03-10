@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_safe_bd/presentation/customize_message/controllers/customize_message_page_controller.dart';
 import 'package:flutter_safe_bd/utils/custom_message.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 
 class CustomizeMessagePage extends StatefulWidget {
   const CustomizeMessagePage({super.key});
@@ -16,6 +18,19 @@ class _CustomizeMessagePageState extends State<CustomizeMessagePage> {
   void dispose() {
     _customMsgTEC.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    initialPageSetup();
+    super.initState();
+  }
+
+  Future<void> initialPageSetup() async {
+    await Get.find<CustomizeMessagePageController>()
+        .fetchUserCustomizedMessage();
+    _customMsgTEC.text =
+        Get.find<CustomizeMessagePageController>().getCustomMessage;
   }
 
   @override
@@ -38,28 +53,30 @@ class _CustomizeMessagePageState extends State<CustomizeMessagePage> {
                   ),
                 ),
                 const SizedBox(height: 5),
-                ElevatedButton(onPressed: () {}, child: Text("Apply")),
-                const SizedBox(height: 5),
-                Text(
-                  "This is just example what you're message will look like. Position data is not be accurate here.",
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                GetBuilder<CustomizeMessagePageController>(
+                  builder: (controller) {
+                    return ElevatedButton(
+                      onPressed: () async {
+                        await controller.setCustomMessage(
+                          msg: _customMsgTEC.text,
+                        );
+                      },
+                      child: Text("Apply"),
+                    );
+                  },
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  CustomMessage.defaultMessage(
-                    position: Position(
-                      longitude: 0,
-                      latitude: 0,
-                      timestamp: DateTime.now(),
-                      accuracy: 0,
-                      altitude: 0,
-                      altitudeAccuracy: 0,
-                      heading: 0,
-                      headingAccuracy: 0,
-                      speed: 0,
-                      speedAccuracy: 0,
-                    ),
-                  ),
+                  "This is just example what you're message will look like. Position data is not accurate here.",
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 5),
+                GetBuilder<CustomizeMessagePageController>(
+                  builder: (controller) {
+                    return Text(
+                      "${controller.getCustomMessage}\n${CustomMessage.defaultMessage(position: Position(longitude: 0, latitude: 0, timestamp: DateTime.now(), accuracy: 0, altitude: 0, altitudeAccuracy: 0, heading: 0, headingAccuracy: 0, speed: 0, speedAccuracy: 0))}",
+                    );
+                  },
                 ),
               ],
             ),

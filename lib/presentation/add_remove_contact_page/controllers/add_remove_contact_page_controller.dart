@@ -81,4 +81,5 @@ class AddRemoveContactPageController extends GetxController {
 
     update();
   }
-}
+
+  }

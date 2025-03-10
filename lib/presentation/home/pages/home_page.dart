@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_safe_bd/app_controller/app_controller.dart';
 import 'package:flutter_safe_bd/presentation/add_remove_contact_page/controllers/add_remove_contact_page_controller.dart';
+import 'package:flutter_safe_bd/presentation/customize_message/controllers/customize_message_page_controller.dart';
 import 'package:flutter_safe_bd/presentation/home/controller/home_page_controller.dart';
 import 'package:flutter_safe_bd/routes/app_routes.dart';
 import 'package:flutter_safe_bd/services/permission_service.dart';
@@ -28,6 +29,8 @@ class _HomePageState extends State<HomePage> {
     await PermissionService().checkLocationPermission();
     await Get.find<HomePageController>().fetchCurrentPosition();
     await Get.find<AddRemoveContactPageController>().fetchContacts();
+    await Get.find<CustomizeMessagePageController>()
+        .fetchUserCustomizedMessage();
     Get.find<HomePageController>().fetchContactList();
   }
 
@@ -90,7 +93,9 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () async {
                         await Get.find<HomePageController>().sendSmsToAll();
                       },
-                      child: Text("Tap to SMS all trusted persons"),
+                      child: Text(
+                        "Tap to SMS all trusted persons\ndoes not work on all devices",
+                      ),
                     ),
                     const SizedBox(height: 12),
                     _buildContactList(),
