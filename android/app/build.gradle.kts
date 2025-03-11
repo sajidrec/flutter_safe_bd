@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.infinitybd71.safe_bd.flutter_safe_bd"
+    namespace = "com.infinitybd71.safe_bd"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
@@ -20,7 +20,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.infinitybd71.safe_bd.flutter_safe_bd"
+        applicationId = "com.infinitybd71.safe_bd"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode

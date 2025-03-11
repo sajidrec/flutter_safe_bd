@@ -14,11 +14,13 @@
         android:name="android.permission.RECEIVE_SMS"
         android:required="false" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
 
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon"
-        android:label="flutter_safe_bd">
+        android:label="SafeBD">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
