@@ -244,7 +244,9 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(AppRoutes.about);
+            },
             child: ListTile(
               title: Text("About"),
               leading: Icon(Icons.info_outline),

@@ -5,4 +5,5 @@ abstract class AppRoutes {
   static const String customMessage = '/customMessage';
   static const String refreshRate = '/refreshRate';
   static const String importantNumbers = '/importantNumbers';
+  static const String about = '/about';
 }

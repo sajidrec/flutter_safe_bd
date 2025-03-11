@@ -1,3 +1,4 @@
+import 'package:flutter_safe_bd/presentation/about/screens/about_page.dart';
 import 'package:flutter_safe_bd/presentation/add_remove_contact_page/pages/add_remove_contact_page.dart';
 import 'package:flutter_safe_bd/presentation/customize_message/pages/customize_message_page.dart';
 import 'package:flutter_safe_bd/presentation/home/pages/home_page.dart';
@@ -21,5 +22,6 @@ class AppPages {
       name: AppRoutes.importantNumbers,
       page: () => ImportantNumbersPage(),
     ),
+    GetPage(name: AppRoutes.about, page: () => AboutPage()),
   ];
 }
