@@ -80,7 +80,7 @@ class HomePageController extends GetxController {
       path: phoneNumber,
       queryParameters: <String, String>{
         'body':
-            "${Get.find<CustomizeMessagePageController>().getCustomMessage}\n${CustomMessage.defaultMessage(position: _position)}",
+            "${Get.find<CustomizeMessagePageController>().getCustomMessage}\n${CustomMessage.defaultSMS(position: _position)}",
       },
     );
 
@@ -99,7 +99,7 @@ class HomePageController extends GetxController {
       path: allNumberList.join(","),
       queryParameters: <String, String>{
         'body':
-            "${Get.find<CustomizeMessagePageController>().getCustomMessage}\n${CustomMessage.defaultMessage(position: _position)}",
+            "${Get.find<CustomizeMessagePageController>().getCustomMessage}\n${CustomMessage.defaultSMS(position: _position)}",
       },
     );
 
@@ -108,7 +108,7 @@ class HomePageController extends GetxController {
 
   Future<void> sendWhatsAppMessage(String phoneNumber) async {
     final Uri url = Uri.parse(
-      "https://wa.me/$phoneNumber?text=${Uri.encodeComponent("${Get.find<CustomizeMessagePageController>().getCustomMessage}\n${CustomMessage.defaultMessage(position: _position)}")}",
+      "https://wa.me/$phoneNumber?text=${Uri.encodeComponent("${Get.find<CustomizeMessagePageController>().getCustomMessage}\n${CustomMessage.defaultWhatsAppMessage(position: _position)}")}",
     );
 
     await launchUrl(url, mode: LaunchMode.externalApplication);

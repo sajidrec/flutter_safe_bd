@@ -20,8 +20,13 @@ class SettingsPage extends StatelessWidget {
                     Get.toNamed(AppRoutes.customMessage);
                   },
                   child: ListTile(
-                    title: Text("Customize message"),
-                    leading: Icon(Icons.message_rounded),
+                    title: Text("Customize message (Whatsapp)"),
+                    leading: Image.asset(
+                      "assets/icons/whatsapp_icon.png",
+                      width: 24,
+                      errorBuilder:
+                          (context, error, stackTrace) => Text("Whatsapp"),
+                    ),
                   ),
                 ),
                 InkWell(

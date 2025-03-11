@@ -37,7 +37,7 @@ class _CustomizeMessagePageState extends State<CustomizeMessagePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: Text("Custom message")),
+        appBar: AppBar(title: Text("Custom message (Whatsapp)")),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -74,7 +74,7 @@ class _CustomizeMessagePageState extends State<CustomizeMessagePage> {
                 GetBuilder<CustomizeMessagePageController>(
                   builder: (controller) {
                     return Text(
-                      "${controller.getCustomMessage}\n${CustomMessage.defaultMessage(position: Position(longitude: 0, latitude: 0, timestamp: DateTime.now(), accuracy: 0, altitude: 0, altitudeAccuracy: 0, heading: 0, headingAccuracy: 0, speed: 0, speedAccuracy: 0))}",
+                      "${controller.getCustomMessage}\n${CustomMessage.defaultWhatsAppMessage(position: Position(longitude: 0, latitude: 0, timestamp: DateTime.now(), accuracy: 0, altitude: 0, altitudeAccuracy: 0, heading: 0, headingAccuracy: 0, speed: 0, speedAccuracy: 0))}",
                     );
                   },
                 ),
